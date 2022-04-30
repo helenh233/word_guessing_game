@@ -1,4 +1,4 @@
-// This program allows you to play a word-guessing game interactively
+// This program allows you to play a custom word-guessing game interactively
 
 #include <assert.h>
 #include <stdio.h>
@@ -13,12 +13,12 @@ int main(void) {
   char **results = malloc(max_len * sizeof(char *));
   char alphabet[27] = "";
 
-  char *secret_word = "bangtansonyeondan"; // lowercase only
+  char *secret_word = "secretword";                 // lowercase, printable characters only
   int secret_len = strlen(secret_word);
 
   int num_guesses = 0;
 
-  printf("Try to guess the %d-letter long secret word. (Note: neither the secret word nor your guesses are required to be valid english words). If you would like to give up, enter ':('. Good luck!\n", secret_len);
+  printf("Try to guess the %d-letter long secret word. (Note: neither the secret word nor your guesses are required to be valid English words). If you would like to give up, enter ':('. Good luck!\n", secret_len);
 
   while (1) {
     if (num_guesses + 1 == max_len) {
@@ -31,8 +31,8 @@ int main(void) {
       results[i] = NULL;
     }
 
-    guesses[num_guesses] = malloc((secret_len + 1) * sizeof(char));
-    results[num_guesses] = malloc((secret_len + 1) * sizeof(char));
+    guesses[num_guesses] = malloc((secret_len * 2) * sizeof(char));
+    results[num_guesses] = malloc((secret_len * 2) * sizeof(char));
 
     printf("\n----------------------------------------------------\n");
     if (num_guesses) {
@@ -46,7 +46,7 @@ int main(void) {
     available_letters(guesses, results, num_guesses, alphabet);
     printf("\nLetters left (capital letters are in secret word):\n  %s\n", alphabet);
 
-    printf("\nEnter your lowercase, %d-letter guess #%d:\n", secret_len, num_guesses + 1);
+    printf("\nEnter your guess #%d (in lowercase):\n", num_guesses + 1);
 
     int result = scanf("%s", guesses[num_guesses]);
     if (result != 1) {
@@ -54,12 +54,22 @@ int main(void) {
     }
 
     if (!strcmp(guesses[num_guesses], ":(")) {
-      printf("\nSmh loser :p The word was: %s\n", secret_word);
+      printf("\nAdmit defeat! The word was: %s\n", secret_word);
       break;
     }
 
+    if (strlen(guesses[num_guesses]) != secret_len) {
+      printf("Invalid guess. Gguesses must be %d letters long\n", secret_len);
+      char input = 0;
+      while (input != 'k') {
+        printf("Press the [k] key, then [enter] to try again\n");
+        scanf(" %c", &input);
+      }
+      continue;
+    }
+
     if (!valid_guess(guesses, results, num_guesses, guesses[num_guesses])) {
-      printf("\nInvalid guess >:( previous hints must be used\n");
+      printf("\nInvalid guess. Previous hints must be used\n");
       char input = 0;
       while (input != 'k') {
         printf("Press the [k] key, then [enter] to try again\n");
@@ -84,7 +94,7 @@ int main(void) {
   free(results);
 
   char exit = 0;
-  while (input != 'x') {
+  while (exit != 'x') {
         printf("Press the [x] key, then [enter] to exit game\n");
         scanf(" %c", &exit);
       }

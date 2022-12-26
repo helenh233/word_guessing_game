@@ -1,6 +1,6 @@
 // This program allows you to play a custom word-guessing game interactively
 
-#include <assert.h>
+#include <assert.h> # necessary????????
 #include <stdio.h>
 #include <stdlib.h>
 #include <string.h>
@@ -13,7 +13,8 @@ int main(void) {
   char **results = malloc(max_len * sizeof(char *));
   char alphabet[27] = "";
 
-  char *secret_word = "secretword";                 // lowercase, printable characters only
+  // Fill in (can only contain lowercase, printable characters)
+  char *secret_word = "secretword";
   int secret_len = strlen(secret_word);
 
   int num_guesses = 0;

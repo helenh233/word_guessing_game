@@ -15,16 +15,18 @@ int main(void) {
   char alphabet[27] = "";
 
   // Fill in (can only contain lowercase, printable characters)
-  char *secret_word = "secretword";
+  char *secret_word = "";
   int secret_len = strlen(secret_word);
 
   int num_guesses = 0;
 
   printf("Try to guess the %d-letter long secret word. (Note: neither the secret word nor your guesses are required to be valid English words). If you would like to give up, enter ':('. Good luck!\n", secret_len);
-
+  
+  // Loops continously until the secret_word is guessed, or the player gives up
   while (1) {
+    // Memory managment to enlarge array 
     if (num_guesses + 1 == max_len) {
-      max_len *= 2;
+      max_len *= 2; // double the capacity
       guesses = realloc(guesses, max_len * sizeof(char *));
       results = realloc(results, max_len * sizeof(char *));
     }

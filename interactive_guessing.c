@@ -9,6 +9,7 @@
 int main(void) {
 
   int max_len = 1;
+  // array of strings
   char **guesses = malloc(max_len * sizeof(char *));
   char **results = malloc(max_len * sizeof(char *));
   char alphabet[27] = "";

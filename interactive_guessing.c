@@ -20,7 +20,7 @@ int main(void) {
 
   int num_guesses = 0;
 
-  printf("Try to guess the %d-letter long secret word. (Note: neither the secret word nor your guesses are required to be valid English words). If you would like to give up, enter ':('. Good luck!\n", secret_len);
+  printf("Try to guess the %d-letter long secret word.\n(Note: neither the secret word nor your guesses are required to be valid English words).\nIf you would like to give up, enter ':('.\nGood luck!\n", secret_len);
   
   // Loops continously until the secret_word is guessed, or the player gives up
   while (1) {

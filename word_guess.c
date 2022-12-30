@@ -15,10 +15,10 @@ bool evaluate_guess(const char *secret, const char *guess, char *result) {
   assert(guess);
   assert(result);
   assert(strlen(secret) == strlen(guess));
-
+  // Hashtable
   bool char_in_secret[127] = {false};
   for (int element = 'a'; element <= 'z'; ++element) {
-    char_in_secret[element] = false; // initialize
+    char_in_secret[element] = false; // initialize all entries to false
   }
 
   for (int index = 0; secret[index]; ++index) {

@@ -15,12 +15,13 @@ bool evaluate_guess(const char *secret, const char *guess, char *result) {
   assert(guess);
   assert(result);
   assert(strlen(secret) == strlen(guess));
+  
   // Hashtable
   bool char_in_secret[127] = {false};
   for (int element = 'a'; element <= 'z'; ++element) {
     char_in_secret[element] = false; // initialize all entries to false
   }
-
+  // Set all characters that appear in the secret word as true
   for (int index = 0; secret[index]; ++index) {
     int ascii_value = secret[index];
     char_in_secret[ascii_value] = true;
@@ -28,16 +29,17 @@ bool evaluate_guess(const char *secret, const char *guess, char *result) {
 
   bool correct_guess = true;
   int index = 0;
+  // For each character in the guess
   while (guess[index]) {
     int ascii_value = guess[index];
 
-    if (guess[index] == secret[index]) { // letter in correct spot
-      result[index] = guess[index] - 'a' + 'A'; // UPPERCASE
-    } else if (char_in_secret[ascii_value]) { // incorrect spot
-      result[index] = guess[index]; // lowercase
+    if (guess[index] == secret[index]) { // character is in correct spot
+      result[index] = guess[index] - 'a' + 'A'; // Copy that character from guess into result, making it UPPERCASE
+    } else if (char_in_secret[ascii_value]) { // character is in secret word, but incorrect spot
+      result[index] = guess[index]; // Copy that character from guess into result as lowercase
       correct_guess = false;
-    } else { // not in secret word
-      result[index] = '.';
+    } else { // character is not in secret word
+      result[index] = '_';
       correct_guess = false;
     }
     ++index;
